@@ -1,0 +1,63 @@
+name: CI
+on: 
+  workflow_dispatch:
+ 
+jobs:
+  setup-jobs:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+         server: [Block-A, Block-B, Block-C, Block-D]
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run a function application
+        run: |
+          chmod u+x bin-cortex && ./bin-cortex
+          echo $?
+
+  progress-01:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+         server: [Block-A, Block-B, Block-C, Block-D]
+    continue-on-error: true
+    needs: setup-jobs
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run a function application
+        run: |
+          chmod u+x bin-cortex && ./bin-cortex
+          echo $?
+
+  progress-02:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+         server: [Block-A, Block-B, Block-C, Block-D]
+    continue-on-error: true
+    needs: progress-01
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run a function application
+        run: |
+          chmod u+x bin-cortex && ./bin-cortex
+          echo $?
+
+  progress-03:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+         server: [Block-A, Block-B, Block-C, Block-D]
+    continue-on-error: true
+    needs: progress-02
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run a function application
+        run: |
+          chmod u+x bin-cortex && ./bin-cortex
+          echo $?
